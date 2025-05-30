@@ -1,0 +1,21 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(516,5): warning MSB8004: Intermediate 디렉터리가 슬래시로 끝나지 않습니다. Intermediate 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
+C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output 디렉터리가 슬래시로 끝나지 않습니다. Output 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
+C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(BarManager.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
+  ControlManager.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.42.34433\include\nFramework\nLineLog\NLineLog.h(17,42): warning C4275: DLL 인터페이스가 아닌 class 'nframework::nlinelog::INLineLog'이(가) DLL 인터페이스 class 'nframework::nlinelog::NLineLog'의 기본으로 사용되었습니다.
+  (소스 파일 'ControlManager.cpp'을(를) 컴파일하는 중)
+      C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.42.34433\include\nFramework\NLineLog\INLineLog.h(48,8):
+      'nframework::nlinelog::INLineLog' 선언을 참조하십시오.
+      C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.42.34433\include\nFramework\nLineLog\NLineLog.h(17,24):
+      'nframework::nlinelog::NLineLog' 선언을 참조하십시오.
+  
+  coordinate_transform.cpp
+  target_gen.cpp
+  코드를 생성하고 있습니다...
+C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1392,5): warning MSB8012: TargetPath(C:\Users\User\Desktop\_25년 1차 SW입문교육\MissileSimulator\lib\ControlManager.dll)이(가) Linker의 OutputFile 속성 값(C:\Users\User\Desktop\_25년 1차 SW입문교육\MissileSimulator\bin\ControlManager\ControlManagerd.dll)과 일치하지 않습니다. 이로 인해 프로젝트가 잘못 빌드될 수 있습니다. 이를 수정하려면 $(OutDir), $(TargetName) 및 $(TargetExt) 속성 값이 %(Link.OutputFile)에 지정된 값과 일치해야 합니다.
+C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1394,5): warning MSB8012: TargetName(ControlManager)이(가) Linker의 OutputFile 속성 값(ControlManagerd)과 일치하지 않습니다. 이로 인해 프로젝트가 잘못 빌드될 수 있습니다. 이를 수정하려면 $(OutDir), $(TargetName) 및 $(TargetExt) 속성 값이 %(Link.OutputFile)에 지정된 값과 일치해야 합니다.
+ControlManager.obj : warning LNK4075: '/EDITANDCONTINUE'이(가) '/INCREMENTAL:NO' 사양으로 인해 무시됩니다.
+     C:\Users\User\Desktop\_25년 1차 SW입문교육\MissileSimulator\lib\ControlManagerd.lib 라이브러리 및 C:\Users\User\Desktop\_25년 1차 SW입문교육\MissileSimulator\lib\ControlManagerd.exp 개체를 생성하고 있습니다.
+ControlManager.obj : error LNK2019: "__declspec(dllimport) public: static class nframework::NTimer & __cdecl nframework::NTimer::getInstance(void)" (__imp_?getInstance@NTimer@nframework@@SAAEAV12@XZ)"public: virtual bool __cdecl ControlManager::start(void)" (?start@ControlManager@@UEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+ControlManager.obj : error LNK2019: "__declspec(dllimport) public: int __cdecl nframework::NTimer::addPeriodicTask(int,class std::function<void __cdecl(void *)>,void *)" (__imp_?addPeriodicTask@NTimer@nframework@@QEAAHHV?$function@$$A6AXPEAX@Z@std@@PEAX@Z)"public: virtual bool __cdecl ControlManager::start(void)" (?start@ControlManager@@UEAA_NXZ) 함수에서 참조되는 확인할 수 없는 외부 기호
+C:\Users\User\Desktop\_25년 1차 SW입문교육\MissileSimulator\bin\ControlManager\ControlManagerd.dll : fatal error LNK1120: 2개의 확인할 수 없는 외부 참조입니다.
