@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NOM:Nex1ObjectModel xmlns:NOM="lignex1.sw.nframework.NOM" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="lignex1.sw.nframework.NOM NOM.xsd" version="0.1" name="CommandManager" date="2025-05-19" author="SW입문교육">
+	<NOM:objects>
+		<NOM:object name="MSSStateInfo" id="3003" semantics="유도탄 상태 정보" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:attribute name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:attribute name="MissileFlyState" semantics="비행 상태" dataType="FlyStateStruct"/>
+			<NOM:attribute name="MissileID" semantics="유도탄 ID" dataType="ushortBE"/>
+		</NOM:object>
+
+
+		<NOM:object name="RDSTargetInfoToMss" id="6001" semantics="시뮬레이션 시작" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:attribute name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:attribute name="TargetType" semantics="표적종류" dataType="ushortBE"/>
+			<NOM:attribute name="TargetFlyState" semantics="표적 비행 상태" dataType="FlyStateStruct"/>
+			<NOM:attribute name="TargetID" semantics="표적 ID" dataType="ushortBE"/>
+		</NOM:object>
+
+		<NOM:object name="MSSStateInfoToRDS" id="6002" semantics="유도탄 상태 정보" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:attribute name="messageHeader" semantics="메세지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:attribute  name="MissileFlyState" semantics="비행 상태" dataType="FlyStateStruct"/>
+			<NOM:attribute  name="isIntercepted" semantics="격추 여부" dataType="ushortBE"/>
+			<NOM:attribute  name="MissileID" semantics="유도탄 ID" dataType="ushortBE"/>
+		</NOM:object>
+
+		<NOM:object name="MissileStatusToLCHS" id="7003" semantics="유도탄 상태 정보" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:attribute name="messageHeader" semantics="메세지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:attribute name="MissileID" semantics="유도탄 식별자" dataType="ushortBE"/>
+			<NOM:attribute name="MissileAvailabilityStatus" semantics="유도탄 가용 상태(0: 비가역, 1: 가역)" dataType="ushortBE"/>
+			<NOM:attribute name="MissileLunachStatus" semantics="유도탄 발사 상태(0: 대기, 1: 초읽기, 2: 이탈)" dataType="ushortBE"/>
+		</NOM:object>
+
+	</NOM:objects>
+	<NOM:interactions>
+
+		<NOM:interaction name="MSSScenarioInfo" id="3001" semantics="시나리오 정보" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="MissileFlyState" semantics="비행 상태" dataType="FlyStateStruct"/>
+			<NOM:parameter name="MissileID" semantics="유도탄 ID" dataType="ushortBE"/>
+		</NOM:interaction>
+
+		<NOM:interaction name="MSSScenarioAck" id="3002" semantics="시나리오 정보 ACK" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="Result" semantics="수신 여부 (0: 성공, 1: 실패)" dataType="AckResult"/>
+			<NOM:parameter name="MissileID" semantics="유도탄 ID" dataType="ushortBE"/>
+		</NOM:interaction>
+
+		<NOM:interaction name="MSSStateAck" id="3004" semantics="유도탄 상태 정보 Ack" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="Result" semantics="수신 여부 (0: 성공, 1: 실패)" dataType="AckResult"/>
+			<NOM:parameter name="MissileID" semantics="유도탄 ID" dataType="ushortBE"/>
+		</NOM:interaction>
+
+		<NOM:interaction name="StartMSSSimulation" id="3005" semantics="모의시작" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="SimulationStartFlag" semantics="모의시작 여부 (모의 시작=1, 모의=0)" dataType="ushortBE"/>
+			<NOM:parameter name="MissileID" semantics="유도탄 ID" dataType="ushortBE"/>
+		</NOM:interaction>
+
+		<NOM:interaction name="StartMSSSimulationAck" id="3006" semantics="모의 시작 Ack" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="Result" semantics="수신 여부 (0: 성공, 1: 실패)" dataType="AckResult"/>
+			<NOM:parameter name="MissileID" semantics="유도탄 ID" dataType="ushortBE"/>
+		</NOM:interaction>
+
+		<NOM:interaction name="StopMSSSimulation" id="3007" semantics="모의 중지" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="SimulationStartFlag" semantics="모의시작 여부 (모의 시작=1, 모의=0)" dataType="ushortBE"/>
+			<NOM:parameter name="MissileID" semantics="유도탄 ID" dataType="ushortBE"/>
+		</NOM:interaction>
+
+		<NOM:interaction name="StopMSSSimulationAck" id="3008" semantics="모의 중지 Ack" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="Result" semantics="수신 여부 (0: 성공, 1: 실패)" dataType="AckResult"/>
+			<NOM:parameter name="MissileID" semantics="유도탄 ID" dataType="ushortBE"/>
+		</NOM:interaction>
+
+
+
+
+
+		<NOM:interaction name="MissileLoadCommandToMSS" id="7001" semantics="유도탄 장입 명령" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="LauncherID" semantics="발사대 식별자" dataType="ushortBE"/>
+			<NOM:parameter name="MissileID" semantics="유도탄 식별자" dataType="ushortBE"/>
+		</NOM:interaction>
+
+		<NOM:interaction name="MissileControlCommandToMSS" id="7002" semantics="유도탄 제어 명령" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메시지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="MissileID" semantics="유도탄 식별자(미사일 ID)" dataType="ushortBE"/>
+			<NOM:parameter name="MissileControlCommand" semantics="유도탄 제어 명령 (null: 없음, 0: 중단, 1: 중단)" dataType="ushortBE"/>
+		</NOM:interaction>
+
+		<NOM:interaction name="MissileLoadCommandAckToMSS" id="7004" semantics="유도탄 장입 명령 수신 확인" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메세지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="Result" semantics="수신 여부 (0: 성공, 1: 실패)" dataType="ushortBE"/>
+		</NOM:interaction>
+
+		<NOM:interaction name="MissileControlCommandAckToMSS" id="7005" semantics="유도탄 제어 명령 수신 확인" sharing="PublishSubscribe" orderType="Receive" alignment="false">
+			<NOM:parameter name="messageHeader" semantics="메세지 헤더" dataType="messageHeaderStruct"/>
+			<NOM:parameter name="Result" semantics="수신 여부 (0: 성공, 1: 실패)" dataType="ushortBE"/>
+		</NOM:interaction>
+
+
+	</NOM:interactions>
+	<NOM:dataTypes>
+		<NOM:basicTypes>
+		</NOM:basicTypes>
+		<NOM:enumerationTypes>
+		</NOM:enumerationTypes>
+		<NOM:complexTypes>
+		</NOM:complexTypes>
+	</NOM:dataTypes>
+	<NOM:notes>
+
+	</NOM:notes>
+</NOM:Nex1ObjectModel>

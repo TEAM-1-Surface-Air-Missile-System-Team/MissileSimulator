@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- NOM schema version
+     # Revision History
+	- 1.01 : 복합타입의 encoding 방식을 정의할 수 있는 encodingType 필드 추가.
+	- 1.02 : 2024-07-11 nameNotes, semantics 일관성 적용.
+	- 1.03 : 2024-07-16 name, nameNotes에 정규표현식 적용. 
+	- 1.04 : 2024-07-19 name에 하이픈 추가.
+	- 1.05 : 2024-11-29 하위 호환성 (XSD 1.01, NOMParser v1.7.3) 추가: attribute, parameter 이름에 '.' 허용.  nameNotes, note를 comments 용도로 복원
+    - 1.06 : 2025-01-13 enumerationType에 optional attribute "endian" 추가
+	- 1.07 : 2025-03-13 object/attribute, interaction/parameter, ComplexType/fieldType 내 indicatorMultiple, bits attribute 추가(누락부분 복원)
+-->
+<xs:schema xmlns:nom="lignex1.sw.nframework.NOM" elementFormDefault="qualified" targetNamespace="lignex1.sw.nframework.NOM"
+	id="NOM" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="Nex1ObjectModel">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="objects" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="unbounded" name="object">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element minOccurs="0" maxOccurs="unbounded" name="attribute">
+											<xs:complexType>
+												<xs:attribute name="name" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ .-])*" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="size" type="xs:nonNegativeInteger" use="optional" />
+												<xs:attribute name="fixedLength" type="xs:integer" use="optional" />
+												<xs:attribute name="nameNotes" use="optional" >
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<!--1.05 <xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ -])*" />-->
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="semantics" type="xs:string" use="optional" />
+												<xs:attribute name="dataType" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_-])*" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="indicatorLength" use="optional" >
+													<xs:simpleType>
+														<xs:restriction base="xs:integer">
+															<xs:pattern value="0|1|2|4|8|-1|-2|-4|-8" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="indicatorMultiple" type="xs:integer" use="optional" />
+												<xs:attribute name="bits" type="xs:nonNegativeInteger" use="optional" />
+												<xs:attribute name="LSB" type="xs:decimal" use="optional" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="name" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_.-])*" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="id" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="(0X|0x)[0-9a-fA-F]+|0[0-9]+|[0-9]+" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="nameNotes" use="optional" >
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<!--1.05 <xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ -])*" />-->
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="semantics" type="xs:string" use="optional" />
+									<xs:attribute name="sharing" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="Publish|Subscribe|PublishSubscribe|Neither" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="orderType" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="TimeStamp|Receive" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="alignment" type="xs:boolean" use="optional" />
+									<xs:attribute name="period" type="xs:integer" use="optional" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="interactions" minOccurs="0" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="unbounded" name="interaction">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element minOccurs="0" maxOccurs="unbounded" name="parameter">
+											<xs:complexType>
+												<xs:attribute name="name" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ .-])*" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="size" type="xs:nonNegativeInteger" use="optional" />
+												<xs:attribute name="fixedLength" type="xs:integer" use="optional" />
+												<xs:attribute name="nameNotes" use="optional" >
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<!--1.05 <xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ -])*" />-->
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="semantics" type="xs:string" use="optional" />
+												<xs:attribute name="dataType" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_-])*" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="indicatorLength" use="optional" >
+													<xs:simpleType>
+														<xs:restriction base="xs:integer">
+															<xs:pattern value="0|1|2|4|8|-1|-2|-4|-8" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="indicatorMultiple" type="xs:integer" use="optional" />
+												<xs:attribute name="bits" type="xs:nonNegativeInteger" use="optional" />
+												<xs:attribute name="LSB" type="xs:decimal" use="optional" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="name" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_.-])*" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="id" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="(0X|0x)[0-9a-fA-F]+|0[0-9]+|[0-9]+" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="nameNotes" use="optional" >
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<!--1.05 <xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ -])*" />-->
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="semantics" type="xs:string" use="optional" />
+									<xs:attribute name="sharing" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="Publish|Subscribe|PublishSubscribe|Neither" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="orderType" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="TimeStamp|Receive" />
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="alignment" type="xs:boolean" use="optional" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="dataTypes">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="basicTypes">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element minOccurs="0" maxOccurs="unbounded" name="basicType">
+											<xs:annotation>
+												<xs:documentation>size는 bit가 아닌 byte의 size를 입력해야 합니다. endian은 big, little, none 중에 하나를 입력해야 합니다. signed는 unsigned일 경우에 false를 입력하며 signed일 경우는 이 attribute를 생략해도 됩니다.</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:attribute name="name" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_-])*" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="length" type="xs:nonNegativeInteger" use="required" />
+												<xs:attribute name="endian" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:pattern value="little|big|none" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="signed" type="xs:boolean" />
+												<xs:attribute name="type" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:pattern value="Bool|Byte|Char|Short|Integer|Integer64|Float|Double|String|Variable|FixedString|FixedDatum" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="nameNotes" use="optional" >
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<!--<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ -])*" />-->
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="semantics" type="xs:string" use="optional" />
+												<xs:attribute name="note" type="xs:string" use="optional"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="enumerationTypes">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element minOccurs="0" maxOccurs="unbounded" name="enumerationType">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element minOccurs="0" maxOccurs="unbounded" name="enumerator">
+														<xs:complexType>
+															<xs:attribute name="name" use="required">
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_-])*" />
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="value" type="xs:integer" use="required" />
+															<xs:attribute name="nameNotes" use="optional" >
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<!--<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ -])*" />-->
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="semantics" type="xs:string" use="optional" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="name" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_-])*" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="length" use="optional">
+													<xs:simpleType>
+														<xs:restriction base="xs:integer">
+															<xs:pattern value="1|2|4" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="nameNotes" use="optional" >
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<!--1.05 <xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ -])*" />-->
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="semantics" type="xs:string" use="optional" />
+												<xs:attribute name="endian" use="optional" >
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="big" />
+															<xs:enumeration value="little" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="complexTypes">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element minOccurs="0" maxOccurs="unbounded" name="complexType">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element minOccurs="0" maxOccurs="unbounded" name="fieldType">
+														<xs:complexType>
+															<xs:attribute name="name" use="required" >
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ .-])*" />
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="nameNotes" use="optional" >
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<!--1.05 <xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ -])*" />-->
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="semantics" type="xs:string" use="optional" />
+															<xs:attribute name="size" type="xs:nonNegativeInteger" use="optional" />
+															<xs:attribute name="fixedLength" type="xs:integer" use="optional" />
+															<xs:attribute name="dataType" use="required">
+																<xs:simpleType>
+																	<xs:restriction base="xs:string">
+																		<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_-])*" />
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="indicatorLength" use="optional" >
+																<xs:simpleType>
+																	<xs:restriction base="xs:integer">
+																		<xs:pattern value="0|1|2|4|8|-1|-2|-4|-8" />
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+															<xs:attribute name="indicatorMultiple" type="xs:integer" use="optional" />
+															<xs:attribute name="bits" type="xs:nonNegativeInteger" use="optional" />
+															<xs:attribute name="LSB" type="xs:decimal" use="optional" />
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="name" use="required">
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_-])*" />
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="nameNotes" use="optional" >
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<!--1.05 <xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_ -])*" />-->
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+												<xs:attribute name="semantics" type="xs:string" use="optional" />
+												<xs:attribute name="encodingType" type="xs:string" use="optional" />
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="notes">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element minOccurs="0" maxOccurs="unbounded" name="note">
+								<xs:complexType>
+									<xs:attribute name="name"  use="required" >
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<!--1.05 <xs:pattern value="[a-zA-Z0-9_-]([a-zA-Z0-9_-])*" />-->
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="semantics" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9]+.[0-9]+" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="name" type="xs:string" use="required" />
+			<xs:attribute name="date" type="xs:date" use="required" />
+			<xs:attribute name="author" type="xs:string" use="required" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

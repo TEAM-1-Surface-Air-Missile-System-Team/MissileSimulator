@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NOM:Nex1ObjectModel xmlns:NOM="lignex1.sw.nframework.NOM" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="lignex1.sw.nframework.NOM NOM.xsd" version="0.1" name="CommandManager" date="2023-12-06" author="PGM3연구소.4팀 하재희">
+	<NOM:dataTypes>
+
+		<NOM:basicTypes>
+			<NOM:basicType name="double" length="8" endian="little" type="Double" nameNotes="1 2" semantics="64bit double, little endian"/>
+			<NOM:basicType name="doubleBE" length="8" endian="big" type="Double" semantics="64bit double, big endian"/>
+			<NOM:basicType name="float" length="4" endian="little" type="Float" semantics="32bit float, little endian"/>
+			<NOM:basicType name="floatBE" length="4" endian="big" type="Float" semantics="32bit float, big endian"/>
+			<NOM:basicType name="int" length="4" endian="little" type="Integer" semantics="32bit integer, little endian"/>
+			<NOM:basicType name="intBE" length="4" endian="big" type="Integer" semantics="32bit integer, big endian"/>
+			<NOM:basicType name="uint64" length="8" endian="little" signed="false" type="Integer64" semantics="64bit integer, little endian"/>
+			<NOM:basicType name="uint64BE" length="8" endian="big" signed="false" type="Integer64" semantics="64bit unsigned integer, big endian"/>
+			<NOM:basicType name="uint" length="4" endian="little" signed="false" type="Integer" semantics="32bit integer, little endian"/>
+			<NOM:basicType name="uintBE" length="4" endian="big" signed="false" type="Integer" semantics="32bit unsigned integer, big endian"/>
+			<NOM:basicType name="short" length="2" endian="little" type="Short" semantics="16bit integer(short), little endian"/>
+			<NOM:basicType name="shortBE" length="2" endian="big" type="Short" semantics="16bit integer(short), big endian"/>
+			<NOM:basicType name="ushort" length="2" endian="little" signed="false" type="Short" semantics="16bit integer(short), little endian"/>
+			<NOM:basicType name="ushortBE" length="2" endian="big" signed="false" type="Short" semantics="16bit unsigned integer(short), big endian"/>
+			<NOM:basicType name="char" length="1" endian="none" type="Char" semantics="8bit char value"/>
+			<NOM:basicType name="uchar" length="1" endian="none" signed="false" type="Char" semantics="8bit char value"/>
+			<NOM:basicType name="byte" length="1" endian="none" signed="false" type="Byte" semantics="8bit byte value"/>
+			<NOM:basicType name="boolean" length="1" endian="little" type="Bool" semantics="8bit value"/>
+			<NOM:basicType name="string" length="0" endian="none" signed="false" type="String" semantics="String"/>
+			<NOM:basicType name="stringBE" length="0" endian="big" signed="false" type="String" semantics="String, indicator big endian"/>
+			<NOM:basicType name="var" length="0" endian="little" signed="false" type="Variable" semantics="Variable"/>
+		</NOM:basicTypes>
+		<NOM:enumerationTypes>
+
+		</NOM:enumerationTypes>
+
+
+		<NOM:complexTypes>
+			<!-- 발사대 타입 -->
+			<NOM:complexType name="MissileStatusStruct" semantics="탑재된 미사일 목록 (ID, 타입 포함)">
+				<NOM:fieldType name="MissileID" dataType="ushortBE" semantics="유도탄 식별자"/>
+				<NOM:fieldType name="MissileAvailabilityStatus" dataType="ushortBE" semantics="유도탄 가용 상태(0: 비가역, 1: 가역)"/>
+				<NOM:fieldType name="MissileLunachStatus" dataType="ushortBE" semantics="유도탄 발사 상태(0: 대기, 1: 초읽기, 2: 이탈)"/>
+			</NOM:complexType>
+
+			<NOM:complexType name="LauncherStatusStruct" semantics="탑재된 미사일 목록 (ID, 타입 포함)">
+				<NOM:fieldType name="LaunchID" dataType="ushortBE" semantics="유도탄 식별자"/>
+				<NOM:fieldType name="LauncherAvailabillityStatus" dataType="ushortBE" semantics="유도탄 가용 상태(0: 비가역, 1: 가역)"/>
+			</NOM:complexType>
+
+			<NOM:complexType name="MissileStatus" semantics="유도탄 가용 상태">
+				<NOM:fieldType name="value" dataType="ushortBE" semantics="0: 비가역, 1: 가역"/>
+			</NOM:complexType>
+
+			<NOM:complexType name="MissileLunachStatus" semantics="유도탄 발사 절차 상태">
+				<NOM:fieldType name="value" dataType="ushortBE" semantics="0: 대기, 1: 초읽기, 2: 이탈"/>
+			</NOM:complexType>
+
+			<NOM:complexType name="LauncherAvailabillityStatus" semantics="유도탄 가용 상태">
+				<NOM:fieldType name="value" dataType="ushortBE" semantics="0: 비가역, 1: 가역"/>
+			</NOM:complexType>
+
+			<NOM:complexType name="MissileControlCommand" semantics="유도탄 제어 명령">
+				<NOM:fieldType name="value" dataType="ushortBE" semantics="0: 중단, 1: 발사"/>
+			</NOM:complexType>
+
+			<!-- 공중위협, 유도탄, 레이다 타입 -->
+			<NOM:complexType name="FlyStateStruct" semantics="SAAM_CFCS_ICD의 메시지 헤더 구조">
+				<NOM:fieldType name="Tgt_Lat" dataType="doubleBE" semantics="위도"/>
+				<NOM:fieldType name="Tgt_Lon" dataType="doubleBE" semantics="경도"/>
+				<NOM:fieldType name="Tgt_Alt" dataType="doubleBE" semantics="고도"/>
+
+				<NOM:fieldType name="v0" dataType="doubleBE" semantics="초기속도"/>
+
+				<NOM:fieldType name="ECEF_x" dataType="doubleBE" semantics="ECEF x좌표"/>
+				<NOM:fieldType name="ECEF_y" dataType="doubleBE" semantics="ECEF y좌표"/>
+				<NOM:fieldType name="ECEF_z" dataType="doubleBE" semantics="ECEF z좌표"/>
+
+				<NOM:fieldType name="ECEF_velo_x" dataType="doubleBE" semantics="ECEF 속도(N)"/>
+				<NOM:fieldType name="ECEF_velo_y" dataType="doubleBE" semantics="ECEF 속도(E)"/>
+				<NOM:fieldType name="ECEF_velo_z" dataType="doubleBE" semantics="ECEF 속도(D)"/>
+
+				<NOM:fieldType name="velo_x" dataType="doubleBE" semantics="NED좌표계 속도(N)"/>
+				<NOM:fieldType name="velo_y" dataType="doubleBE" semantics="NED좌표계 속도(E)"/>
+				<NOM:fieldType name="velo_z" dataType="doubleBE" semantics="NED좌표계 속도(D)"/>
+
+				<NOM:fieldType name="roll_angle" dataType="doubleBE" semantics="roll 각"/>
+				<NOM:fieldType name="yaw_angle" dataType="doubleBE" semantics="yaw 각"/>
+				<NOM:fieldType name="pitch_angle" dataType="doubleBE" semantics="pitch 각"/>
+				<NOM:fieldType name="max_time" dataType="doubleBE" semantics="최대 비행시간"/>
+			</NOM:complexType>
+
+
+			<NOM:complexType name="ThreatType" semantics="ThreatType">
+				<NOM:fieldType name="value" dataType="ushortBE" semantics="1: 탄도탄, 2: 항공기"/>
+			</NOM:complexType>
+
+			<!-- 공통 -->
+			<NOM:complexType name="messageHeaderStruct" semantics="SAAM_CFCS_ICD의 메시지 헤더 구조">
+				<NOM:fieldType name="MessageID" dataType="ushortBE"/>
+				<NOM:fieldType name="MessageLength" dataType="ushortBE"/>
+			</NOM:complexType>
+
+			<NOM:complexType name="AckResult" semantics="ushortBE">
+				<NOM:fieldType name="value" dataType="ushortBE" semantics="0: 성공, 1: 실패"/>
+			</NOM:complexType>
+		</NOM:complexTypes>
+
+
+	</NOM:dataTypes>
+	<NOM:notes>
+		<NOM:note name="1" semantics="semantic"/>
+		<NOM:note name="2" semantics="semantic"/>
+	</NOM:notes>
+</NOM:Nex1ObjectModel>
