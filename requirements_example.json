@@ -1,0 +1,59 @@
+{
+    "componentName": "MiniProject",
+    "version": "0.4.2",
+    "os": "Windows10",
+    "platform": "x64",
+    "language": "C++ 17, 20, C# 7.3",
+    "type": "CSC",
+    "metadata": {
+        "tools": [
+            {
+                "vendor": "Microsoft",
+                "name": "VisualStudio",
+                "version": "2022"
+            },
+            {
+                "vendor": "Microsoft",
+                "name": "MSVC",
+                "version": "14.3"
+            },
+            {
+                "vendor": "LIGNEX1",
+                "name": "nFramework",
+                "version": ">=1.8.2.250508"
+            },
+            {
+                "vendor": "Microsoft",
+                "name": ".NET Framework",
+                "version": "4.7.2"
+            }
+        ],
+        "authors": [
+            {
+                "name": "Jaehee Ha",
+                "department": "PGM통제기술연구소.4팀",
+                "email": "jaehee.ha@lignex1.com"
+            }
+        ],
+        "properties": [
+            {
+                "vendor": "LIGNEX1",
+                "name": "nRTI",
+                "version": "1.0"
+            },
+            {
+                "vendor": "MAK",
+                "name": "MAK RTI",
+                "version": "4.6"
+            },
+			{
+			    "vendor": "RTI",
+                "name": "Conext DDS",
+                "version": "6.1.2"
+            }
+        ]
+    },
+    "components": [
+        
+    ]
+}
